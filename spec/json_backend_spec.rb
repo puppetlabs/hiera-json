@@ -36,6 +36,22 @@ class Hiera
                     @backend.lookup("key", {}, nil, :priority)
                 end
 
+                it "should retain the data types found in data files" do
+                    Backend.expects(:datasources).yields("one").times(3)
+                    Backend.expects(:datafile).with(:json, {}, "one", "json").returns("/nonexisting/one.json").times(3)
+                    File.expects(:read).with("/nonexisting/one.json").returns('{"stringval":"string",
+                                                                                "boolval":true,
+                                                                                "numericval":1}').times(3)
+
+                    Backend.stubs(:parse_answer).with('string', {}).returns('string')
+                    Backend.stubs(:parse_answer).with(true, {}).returns(true)
+                    Backend.stubs(:parse_answer).with(1, {}).returns(1)
+
+                    @backend.lookup("stringval", {}, nil, :priority).should == "string"
+                    @backend.lookup("boolval", {}, nil, :priority).should == true
+                    @backend.lookup("numericval", {}, nil, :priority).should == 1
+                end
+
                 it "should pick data earliest source that has it for priority searches" do
                     scope = {"rspec" => "test"}
                     Backend.stubs(:parse_answer).with('answer', scope).returns("answer")
