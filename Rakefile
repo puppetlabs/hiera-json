@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
-require 'tasks/release'
+
+Dir['tasks/**/*.rb'].each { |t| load t }
 
 spec = Gem::Specification.new do |s|
   s.name = "hiera-json"
