@@ -8,7 +8,7 @@ class Hiera
             end
 
             def lookup(key, scope, order_override, resolution_type)
-                answer = Backend.empty_answer(resolution_type)
+                answer = nil
 
                 Hiera.debug("Looking up #{key} in JSON backend")
 
@@ -27,9 +27,11 @@ class Hiera
                     # the array
                     #
                     # for priority searches we break after the first found data item
+                    new_answer = Backend.parse_answer(data[key], scope)
                     case resolution_type
                     when :array
-                        answer << Backend.parse_answer(data[key], scope)
+                        answer ||= []
+                        answer << new_answer
                     else
                         answer = Backend.parse_answer(data[key], scope)
                         break
