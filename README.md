@@ -1,24 +1,21 @@
-What?
+Hiera-json is in end-of-life
 =====
 
-A JSON backend for Hiera
+As of the release of Hiera 1.1.0, hiera-json has been incorporated into the
+hiera codebase. The standalone hiera-json is only needed for releases of
+Hiera prior to 1.1.0, which are all in bug-fix only mode. The 1.x branch is
+for those older versions of hiera and is only open for urgent bug-fixes.
+However, do not submit fixes against this repository.
 
-Configuration?
-==============
+What do I do with bugs?
+=====
 
-A sample Hiera config file that activates this backend and stores
-data in _/etc/puppet/hieradata_ can be seen below:
+File bugs for hiera-json against hiera itself and submit patches as pull
+requests against hiera as well.
 
-<pre>
----
-:backends: json
-:hierarchy: %{location}
-            common
-:json:
-   :datadir: /etc/puppet/hieradata
-</pre>
+Links
+====
 
-Constact?
-=========
-
-R.I.Pienaar / rip@devco.net / @ripienaar / www.devco.net
+* [The hiera codebase](https://github.com/puppetlabs/hiera)
+* [Contributing to hiera](https://github.com/puppetlabs/hiera/blob/master/CONTRIBUTING.md)
+* [The hiera bug tracker](https://projects.puppetlabs.com/projects/hiera)
